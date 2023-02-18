@@ -23,8 +23,6 @@ export const provider = new GoogleAuthProvider();
 export const auth = getAuth();
 export const db = getFirestore(app);
 
-console.log(app);
-
 export default function App({Component, pageProps}: AppProps) {
 	return <Component {...pageProps} />;
 }
