@@ -1,8 +1,7 @@
 import Head from 'next/head';
-import { db } from '../utilities/firebase';
-import AuthContext from '../store/firebase/auth-context';
-import AuthProvider from '../store/firebase/AuthProvider';
-import { doc, getDoc, getDocs, collection } from 'firebase/firestore';
+// import { db } from '../utilities/firebase';
+import AuthProvider, { AuthContext } from '../store/firebase/AuthProvider';
+// import { doc, getDoc, getDocs, collection } from 'firebase/firestore';
 import { useContext, useEffect } from 'react';
 
 export default function Home() {

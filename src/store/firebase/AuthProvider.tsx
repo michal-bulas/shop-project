@@ -1,16 +1,29 @@
-import { React } from 'react';
-import AuthContext from './auth-context';
+import React, { PropsWithChildren } from 'react';
 import { auth, provider, db } from '../../utilities/firebase';
-import { signInWithPopup, signOut } from 'firebase/auth';
+import { signInWithPopup, signOut, User } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { doc, setDoc } from 'firebase/firestore';
 
-const AuthProvider = ({ children }) => {
+type AuthValueType = {
+	user: User | null | undefined;
+	loading: boolean;
+	logInWithGoogle: () => void;
+	logOut: () => void;
+};
+
+export const AuthContext = React.createContext<AuthValueType>({
+	user: null,
+	loading: false,
+	logInWithGoogle: () => {},
+	logOut: () => {},
+});
+
+const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
 	const [user, loading] = useAuthState(auth);
 
 	const logInWithGoogle = () => {
 		signInWithPopup(auth, provider).then((result) => {
 			const user = result.user;
-			setCurrentUser(user);
 			const docRef = doc(db, 'users', user.uid);
 
 			try {
@@ -19,7 +32,7 @@ const AuthProvider = ({ children }) => {
 					email: user.email,
 					photo: user.photoURL,
 				});
-			} catch (error) {
+			} catch (error: any) {
 				console.log(error.message);
 			}
 		});
@@ -28,7 +41,7 @@ const AuthProvider = ({ children }) => {
 	const logOut = () => {
 		try {
 			signOut(auth);
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error.message);
 		}
 	};
