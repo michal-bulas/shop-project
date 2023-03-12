@@ -1,25 +1,28 @@
 import Head from 'next/head';
-// import { db } from '../utilities/firebase';
-import AuthProvider, { AuthContext } from '../store/firebase/AuthProvider';
-// import { doc, getDoc, getDocs, collection } from 'firebase/firestore';
+import { AuthContext } from '../store/AuthProvider';
 import { useContext, useEffect } from 'react';
+import Container from '@mui/material/Container';
+import ProductCard from '@/components/UI/ProductCard';
+import Grid from '@mui/material/Grid';
+// import { collection, query, where, getDocs } from 'firebase/firestore';
+// import { db } from '@/utilities/firebase';
+// import { doc, getDoc, getDocs, collection } from 'firebase/firestore';
 
 export default function Home() {
 	const authCtx = useContext(AuthContext);
-	const logInHandler = (event: React.MouseEvent<HTMLElement>) => {
-		event.preventDefault();
-		authCtx.logInWithGoogle();
-	};
-
-	const logOutHandler = (event: React.MouseEvent<HTMLElement>) => {
-		event.preventDefault();
-		authCtx.logOut();
-	};
 
 	useEffect(() => {
 		console.log(authCtx.user);
-	}, [authCtx.user, authCtx.loading]);
+	}, [authCtx.user]);
 
+	// const getProducts = async () => {
+	// 	const q = query(collection(db, 'books'));
+	// 	const querySnapshot = await getDocs(q);
+	// 	querySnapshot.forEach((doc) => {
+	// 		// doc.data() is never undefined for query doc snapshots
+	// 		console.log(doc.data().title);
+	// 	});
+	// };
 	// const getProducts = async () => {
 	// 	const productsSnap = await getDocs(collection(db, 'products'));
 	// 	productsSnap.forEach((product) => {
@@ -56,15 +59,8 @@ export default function Home() {
 					href='/shopping-cart.ico'
 				/>
 			</Head>
-			<AuthProvider>
-				<main>
-					{authCtx.user ? (
-						<button onClick={logOutHandler}>logout</button>
-					) : (
-						<button onClick={logInHandler}>login</button>
-					)}
-				</main>
-			</AuthProvider>
+
+			<button onClick={undefined}>test</button>
 		</>
 	);
 }
