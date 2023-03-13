@@ -3,7 +3,7 @@ import Menu from '@mui/material/Menu';
 import Avatar from '@mui/material/Avatar';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import IconButton from '@mui/material/IconButton';
-import { Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
 import { AuthContext } from '@/store/AuthProvider';
 import { useContext, useState } from 'react';
 

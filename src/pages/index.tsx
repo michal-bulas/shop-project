@@ -1,9 +1,6 @@
 import Head from 'next/head';
 import { AuthContext } from '../store/AuthProvider';
 import { useContext, useEffect } from 'react';
-import Container from '@mui/material/Container';
-import ProductCard from '@/components/UI/ProductCard';
-import Grid from '@mui/material/Grid';
 // import { collection, query, where, getDocs } from 'firebase/firestore';
 // import { db } from '@/utilities/firebase';
 // import { doc, getDoc, getDocs, collection } from 'firebase/firestore';
