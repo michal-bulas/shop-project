@@ -2,14 +2,16 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
 import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import SendIcon from '@mui/icons-material/Send';
+import CallIcon from '@mui/icons-material/Call';
+import InfoIcon from '@mui/icons-material/Info';
 import { useRouter } from 'next/router';
 
 interface MenuDrawerProps {
@@ -28,10 +30,17 @@ const MenuDrawer: React.FC<MenuDrawerProps> = (props) => {
 
 	const drawer = (
 		<div>
-			<Toolbar />
+			<Toolbar>
+				<Typography
+					variant='h6'
+					sx={{ align: 'center' }}
+				>
+					Books Categories
+				</Typography>
+			</Toolbar>
 			<Divider />
 			<List>
-				{['Science', 'Fantasy', 'Crime'].map((text, index) => (
+				{['Science', 'Fantasy', 'Crime'].map((text) => (
 					<ListItem
 						key={text}
 						disablePadding
@@ -39,28 +48,31 @@ const MenuDrawer: React.FC<MenuDrawerProps> = (props) => {
 					>
 						<ListItemButton>
 							<ListItemIcon>
-								{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+								<SendIcon />
 							</ListItemIcon>
 							<ListItemText primary={text} />
 						</ListItemButton>
 					</ListItem>
 				))}
 			</List>
-			<Divider />
-			<List>
-				{['All mail', 'Trash', 'Spam'].map((text, index) => (
-					<ListItem
-						key={text}
-						disablePadding
-					>
-						<ListItemButton>
-							<ListItemIcon>
-								{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-							</ListItemIcon>
-							<ListItemText primary={text} />
-						</ListItemButton>
-					</ListItem>
-				))}
+
+			<List sx={{ position: 'fixed', bottom: '0', width: '240px' }}>
+				<ListItem disablePadding>
+					<ListItemButton>
+						<ListItemIcon>
+							<InfoIcon />
+						</ListItemIcon>
+						<ListItemText primary='About us' />
+					</ListItemButton>
+				</ListItem>
+				<ListItem disablePadding>
+					<ListItemButton>
+						<ListItemIcon>
+							<CallIcon />
+						</ListItemIcon>
+						<ListItemText primary='Contact' />
+					</ListItemButton>
+				</ListItem>
 			</List>
 		</div>
 	);

@@ -7,16 +7,25 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import UserDropDown from './UserDropDown';
 import Link from 'next/link';
+import Badge from '@mui/material/Badge';
+import { useScrollPosition } from '@/hooks/useScrollPosition';
 
 interface MenuAppBarProps {
 	toggleMenu: () => void;
 }
 
 const MenuAppBar: React.FC<MenuAppBarProps> = ({ toggleMenu }) => {
+	const scrollPosition = useScrollPosition();
+
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position='fixed'>
-				<Toolbar>
+				<Toolbar
+					sx={{
+						height: scrollPosition > 120 ? '65px' : '75px',
+						transition: 'all 0.2s linear',
+					}}
+				>
 					<IconButton
 						size='large'
 						edge='start'
@@ -40,7 +49,16 @@ const MenuAppBar: React.FC<MenuAppBarProps> = ({ toggleMenu }) => {
 								fontFamily: 'Roboto',
 							}}
 						>
-							Shop App Project
+							<Typography
+								variant='h6'
+								component='h1'
+								sx={{
+									fontSize: scrollPosition > 120 ? '18px' : '20px',
+									transition: 'all 0.2s linear',
+								}}
+							>
+								Shop App Project
+							</Typography>
 						</Link>
 					</Typography>
 					<>
@@ -51,12 +69,15 @@ const MenuAppBar: React.FC<MenuAppBarProps> = ({ toggleMenu }) => {
 							aria-label='cart of current user'
 							color='inherit'
 						>
+							<Badge
+								badgeContent={3}
+								color='error'
+							></Badge>
 							<ShoppingCartOutlinedIcon />
 						</IconButton>
 					</>
 				</Toolbar>
 			</AppBar>
-			<Toolbar />
 		</Box>
 	);
 };
