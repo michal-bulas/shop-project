@@ -1,28 +1,84 @@
-import React, { PropsWithChildren } from 'react';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-const ProductCard: React.FC<PropsWithChildren> = ({ children }) => {
+import React from 'react';
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActionArea from '@mui/material/CardActionArea';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import Divider from '@mui/material/Divider';
+
+interface PropsTypes {
+	author: string;
+	price: number;
+	title: string;
+	year: string;
+	photo: string;
+	onClick: () => void;
+}
+const ProductCard: React.FC<PropsTypes> = (props) => {
 	return (
-		<Grid
-			item
-			xs={12}
-			sm={6}
-			md={4}
-		>
-			<Paper
-				elevation={3}
+		<>
+			<Card
+				raised={true}
 				sx={{
-					height: '100%',
-					padding: 2,
-					position: 'relative',
+					height: '540px',
+					border: '1px solid #CCC',
+					borderRadius: '16px',
 					':hover': {
 						boxShadow: 20, // theme.shadows[20]
 					},
 				}}
 			>
-				{children}
-			</Paper>
-		</Grid>
+				<CardActionArea
+					onClick={props.onClick}
+					sx={{
+						height: '90%',
+						display: 'flex',
+						flexDirection: 'column',
+						justifyContent: 'flex-start',
+					}}
+				>
+					<CardMedia
+						component='img'
+						image={props.photo}
+						alt='Book Image'
+						height='75%'
+						sx={{ objectFit: 'contain', boxShadow: 3 }}
+					/>
+
+					<CardContent
+						sx={{
+							textAlign: 'left',
+							width: '100%',
+						}}
+					>
+						<Typography
+							variant={'h6'}
+							onClick={props.onClick}
+						>
+							{props.title}
+						</Typography>
+
+						<Typography variant={'subtitle2'}>
+							{`${props.author}, ${props.year}`}
+						</Typography>
+					</CardContent>
+				</CardActionArea>
+				<Divider />
+				<CardActionArea
+					sx={{
+						width: '100%',
+						height: '10%',
+						display: 'flex',
+						flexDirection: 'row',
+						justifyContent: 'center',
+					}}
+				>
+					<Typography variant={'subtitle2'}>${props.price}</Typography>
+					<AddShoppingCartIcon sx={{ margin: '4px' }} />
+				</CardActionArea>
+			</Card>
+		</>
 	);
 };
 

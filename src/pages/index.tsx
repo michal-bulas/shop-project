@@ -1,16 +1,17 @@
+import Carousel from '@/components/UI/Carousel';
 import Head from 'next/head';
-import { AuthContext } from '../store/AuthProvider';
-import { useContext, useEffect } from 'react';
+// import { AuthContext } from '../store/AuthProvider';
+// import { useContext, useEffect } from 'react';
 // import { collection, query, where, getDocs } from 'firebase/firestore';
 // import { db } from '@/utilities/firebase';
 // import { doc, getDoc, getDocs, collection } from 'firebase/firestore';
 
 export default function Home() {
-	const authCtx = useContext(AuthContext);
+	// const authCtx = useContext(AuthContext);
 
-	useEffect(() => {
-		console.log(authCtx.user);
-	}, [authCtx.user]);
+	// useEffect(() => {
+	// 	console.log(authCtx.user);
+	// }, [authCtx.user]);
 
 	// const getProducts = async () => {
 	// 	const q = query(collection(db, 'books'));
@@ -28,7 +29,7 @@ export default function Home() {
 	// };
 
 	// const getProductById = async (id: string) => {
-	// 	const productsDoc = doc(db, 'products', id);
+	// 	const productsDoc = doc(db, 'books', id);
 	// 	const productsSnap = await getDoc(productsDoc);
 	// 	console.log(productsSnap.data());
 	// };
@@ -56,8 +57,6 @@ export default function Home() {
 					href='/shopping-cart.ico'
 				/>
 			</Head>
-
-			<button onClick={undefined}>test</button>
 		</>
 	);
 }
