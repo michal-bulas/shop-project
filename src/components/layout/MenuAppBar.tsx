@@ -6,8 +6,8 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import UserDropDown from './UserDropDown';
-import Link from 'next/link';
 import Badge from '@mui/material/Badge';
+import Link from 'next/link';
 import { useScrollPosition } from '@/hooks/useScrollPosition';
 
 interface MenuAppBarProps {
@@ -19,10 +19,14 @@ const MenuAppBar: React.FC<MenuAppBarProps> = ({ toggleMenu }) => {
 
 	return (
 		<Box sx={{ flexGrow: 1 }}>
-			<AppBar position='fixed'>
+			<AppBar
+				position='fixed'
+				color='transparent'
+				sx={{ top: 0, backdropFilter: 'blur(20px)' }}
+			>
 				<Toolbar
 					sx={{
-						height: scrollPosition > 120 ? '65px' : '75px',
+						height: scrollPosition > 100 ? '65px' : '75px',
 						transition: 'all 0.2s linear',
 					}}
 				>
@@ -53,8 +57,9 @@ const MenuAppBar: React.FC<MenuAppBarProps> = ({ toggleMenu }) => {
 								variant='h6'
 								component='h1'
 								sx={{
-									fontSize: scrollPosition > 120 ? '18px' : '20px',
+									fontSize: scrollPosition > 100 ? '18px' : '20px',
 									transition: 'all 0.2s linear',
+									color: 'black',
 								}}
 							>
 								Shop App Project

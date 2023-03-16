@@ -29,7 +29,7 @@ const MenuDrawer: React.FC<MenuDrawerProps> = (props) => {
 	};
 
 	const drawer = (
-		<div>
+		<>
 			<Toolbar>
 				<Typography
 					variant='h6'
@@ -41,23 +41,29 @@ const MenuDrawer: React.FC<MenuDrawerProps> = (props) => {
 			<Divider />
 			<List>
 				{['Science', 'Fantasy', 'Crime'].map((text) => (
-					<ListItem
-						key={text}
-						disablePadding
-						onClick={showCategoryHandler.bind(null, text)}
-					>
-						<ListItemButton>
-							<ListItemIcon>
-								<SendIcon />
-							</ListItemIcon>
-							<ListItemText primary={text} />
-						</ListItemButton>
-					</ListItem>
+					<>
+						<ListItem
+							key={text}
+							disablePadding
+							onClick={showCategoryHandler.bind(null, text)}
+						>
+							<ListItemButton>
+								<ListItemIcon>
+									<SendIcon />
+								</ListItemIcon>
+								<ListItemText primary={text} />
+							</ListItemButton>
+						</ListItem>
+						<Divider variant='middle' />
+					</>
 				))}
 			</List>
 
 			<List sx={{ position: 'fixed', bottom: '0', width: '240px' }}>
-				<ListItem disablePadding>
+				<ListItem
+					disablePadding
+					key='AboutUs'
+				>
 					<ListItemButton>
 						<ListItemIcon>
 							<InfoIcon />
@@ -65,7 +71,12 @@ const MenuDrawer: React.FC<MenuDrawerProps> = (props) => {
 						<ListItemText primary='About us' />
 					</ListItemButton>
 				</ListItem>
-				<ListItem disablePadding>
+				<Divider variant='middle' />
+
+				<ListItem
+					disablePadding
+					key='Contact'
+				>
 					<ListItemButton>
 						<ListItemIcon>
 							<CallIcon />
@@ -74,7 +85,7 @@ const MenuDrawer: React.FC<MenuDrawerProps> = (props) => {
 					</ListItemButton>
 				</ListItem>
 			</List>
-		</div>
+		</>
 	);
 
 	return (
@@ -98,6 +109,7 @@ const MenuDrawer: React.FC<MenuDrawerProps> = (props) => {
 						'& .MuiDrawer-paper': {
 							boxSizing: 'border-box',
 							width: drawerWidth,
+							borderTopRightRadius: '16px',
 						},
 					}}
 				>
