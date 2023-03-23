@@ -1,27 +1,26 @@
 import { useCallback, useState, useEffect } from 'react';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '@/utilities/firebase';
+import { useCart } from '@/store/CartProvider';
 import { useRouter } from 'next/router';
 import ProductCard from '@/components/UI/ProductCard';
 import Grid from '@mui/material/Grid';
 import Skeleton from '@mui/material/Skeleton';
 
 interface ProductsTypes {
-	author: string;
-	category: string;
-	defaultCurrency: string;
-	description: string;
-	price: number;
-	quantity: number;
-	title: string;
-	year: string;
 	id: string;
+	title: string;
+	author: string;
+	price: number;
+	year: string;
 	photo: string;
+	quantity: number;
 }
 
 const CategoryDetail: React.FC = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [products, setProducts] = useState<ProductsTypes[]>([]);
+	const { addToCart } = useCart();
 	const router = useRouter();
 	const productsCategory = router.query.category as string;
 
@@ -100,7 +99,17 @@ const CategoryDetail: React.FC = () => {
 						author={product.author}
 						year={product.year}
 						price={product.price}
-						onClick={showDetailsHandler.bind(null, product.id)}
+						onShowDetail={showDetailsHandler.bind(null, product.id)}
+						onAddCart={() => {
+							addToCart(
+								product.id,
+								product.photo,
+								product.title,
+								product.author,
+								product.price,
+								product.quantity
+							);
+						}}
 					></ProductCard>
 				</Grid>
 			))}

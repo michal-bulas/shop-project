@@ -1,30 +1,30 @@
-import { useState } from 'react';
+import { useCart } from '@/store/CartProvider';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
-const Counter = (props: { quantity: number }) => {
-	const [counter, setCounter] = useState<number>(1);
+interface CounterTypes {
+	cartItemQuantity: number;
+	itemId: string;
+}
 
-	const incrementHandler = () => {
-		if (counter > 1) {
-			setCounter((prev) => prev - 1);
-		}
-	};
-	const decrementHandler = () => {
-		if (counter < props.quantity) {
-			setCounter((prev) => prev + 1);
-		}
-	};
+const Counter = ({ cartItemQuantity, itemId }: CounterTypes) => {
+	const { increaseCartQuantity, decreaseCartQuantity } = useCart();
 
 	return (
 		<ButtonGroup
 			size='small'
 			variant='contained'
 		>
-			<Button onClick={incrementHandler}>−</Button>
+			<Button
+				onClick={() => {
+					decreaseCartQuantity(itemId);
+				}}
+			>
+				−
+			</Button>
 
-			<Box
+			<Typography
 				sx={{
 					width: '3rem',
 					bgcolor: 'white',
@@ -33,10 +33,16 @@ const Counter = (props: { quantity: number }) => {
 					justifyContent: 'center',
 				}}
 			>
-				{counter}
-			</Box>
+				{cartItemQuantity ? cartItemQuantity : 0}
+			</Typography>
 
-			<Button onClick={decrementHandler}>+</Button>
+			<Button
+				onClick={() => {
+					increaseCartQuantity(itemId);
+				}}
+			>
+				+
+			</Button>
 		</ButtonGroup>
 	);
 };

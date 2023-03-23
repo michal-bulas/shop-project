@@ -1,54 +1,60 @@
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import Image from 'next/image';
+import { useCart } from '@/store/CartProvider';
+import { db } from '@/utilities/firebase';
+import { useState, useEffect, useCallback } from 'react';
+import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import Typography from '@mui/material/Typography';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import ArrowButton from '@/components/UI/ArrowButton';
+import CarouselArrowButton from '@/components/UI/CarouselArrowButton';
 
-const itemData = [
-	{
-		img: "https://firebasestorage.googleapis.com/v0/b/shop-project-51550.appspot.com/o/booksImage%2Ffantasy%2FHarry%20Potter%20and%20the%20Philosopher's%20Stone.jpg?alt=media&token=3fe08a73-7f1d-4c11-abef-8262c4d72eb6",
-	},
-	{
-		img: "https://firebasestorage.googleapis.com/v0/b/shop-project-51550.appspot.com/o/booksImage%2Ffantasy%2FHarry%20Potter%20and%20the%20Philosopher's%20Stone.jpg?alt=media&token=3fe08a73-7f1d-4c11-abef-8262c4d72eb6",
-	},
-	{
-		img: "https://firebasestorage.googleapis.com/v0/b/shop-project-51550.appspot.com/o/booksImage%2Ffantasy%2FHarry%20Potter%20and%20the%20Philosopher's%20Stone.jpg?alt=media&token=3fe08a73-7f1d-4c11-abef-8262c4d72eb6",
-	},
-	{
-		img: "https://firebasestorage.googleapis.com/v0/b/shop-project-51550.appspot.com/o/booksImage%2Ffantasy%2FHarry%20Potter%20and%20the%20Philosopher's%20Stone.jpg?alt=media&token=3fe08a73-7f1d-4c11-abef-8262c4d72eb6",
-	},
-	{
-		img: "https://firebasestorage.googleapis.com/v0/b/shop-project-51550.appspot.com/o/booksImage%2Ffantasy%2FHarry%20Potter%20and%20the%20Philosopher's%20Stone.jpg?alt=media&token=3fe08a73-7f1d-4c11-abef-8262c4d72eb6",
-	},
-	{
-		img: "https://firebasestorage.googleapis.com/v0/b/shop-project-51550.appspot.com/o/booksImage%2Ffantasy%2FHarry%20Potter%20and%20the%20Philosopher's%20Stone.jpg?alt=media&token=3fe08a73-7f1d-4c11-abef-8262c4d72eb6",
-	},
-	{
-		img: "https://firebasestorage.googleapis.com/v0/b/shop-project-51550.appspot.com/o/booksImage%2Ffantasy%2FHarry%20Potter%20and%20the%20Philosopher's%20Stone.jpg?alt=media&token=3fe08a73-7f1d-4c11-abef-8262c4d72eb6",
-	},
-	{
-		img: "https://firebasestorage.googleapis.com/v0/b/shop-project-51550.appspot.com/o/booksImage%2Ffantasy%2FHarry%20Potter%20and%20the%20Philosopher's%20Stone.jpg?alt=media&token=3fe08a73-7f1d-4c11-abef-8262c4d72eb6",
-	},
-	{
-		img: "https://firebasestorage.googleapis.com/v0/b/shop-project-51550.appspot.com/o/booksImage%2Ffantasy%2FHarry%20Potter%20and%20the%20Philosopher's%20Stone.jpg?alt=media&token=3fe08a73-7f1d-4c11-abef-8262c4d72eb6",
-	},
-];
+interface ProductsTypes {
+	id: string;
+	title: string;
+	author: string;
+	price: number;
+	year: string;
+	photo: string;
+	quantity: number;
+}
 
 const Carousel = () => {
+	const [products, setProducts] = useState<ProductsTypes[]>([]);
+
+	const fetchDocuments = useCallback(async () => {
+		const q = query(collection(db, 'books'), orderBy('title'), limit(10));
+		const querySnapshot = await getDocs(q);
+
+		const docsData = querySnapshot.docs.map(
+			(doc) => doc.data() as ProductsTypes
+		);
+
+		setProducts(docsData);
+	}, []);
+
+	useEffect(() => {
+		fetchDocuments();
+	}, [fetchDocuments]);
+
+	const { addToCart } = useCart();
+
 	const settings = {
 		dots: true,
 		infinite: true,
+		autoplay: true,
+		autoplaySpeed: 3000,
 		speed: 500,
 		slidesToShow: 4,
 		slidesToScroll: 1,
 		initialSlide: 0,
-		nextArrow: <ArrowButton direction='right' />,
-		prevArrow: <ArrowButton direction='left' />,
+		nextArrow: <CarouselArrowButton direction='right' />,
+		prevArrow: <CarouselArrowButton direction='left' />,
 		responsive: [
 			{
 				breakpoint: 1024,
@@ -83,33 +89,52 @@ const Carousel = () => {
 			</Typography>
 			<Box sx={{ boxShadow: 20 }}>
 				<Slider {...settings}>
-					{itemData.map((item, index) => (
+					{products.map((product) => (
 						<ImageListItem
-							key={index}
-							sx={{ p: 1, boxShadow: 1 }}
+							key={product.id}
+							sx={{ p: 1, boxShadow: 1, width: 200 }}
 						>
-							<img
-								src={item.img}
+							<Image
+								src={product.photo}
 								alt={'Product Image'}
+								width={223}
+								height={334}
 								style={{
 									display: 'inline-block',
 									verticalAlign: 'bottom',
 								}}
 							/>
 							<ImageListItemBar
-								sx={{ m: 1 }}
-								title={'Harry Potter and the Philosophers Stone'}
-								subtitle={'J.K. Rowling'}
+								sx={{ m: 1.01 }}
+								title={product.title}
+								subtitle={product.author}
 								actionIcon={
-									<IconButton sx={{ color: 'rgba(255, 255, 255, 0.54)', m: 1 }}>
-										<Typography
-											variant={'body1'}
-											sx={{ mr: 1 }}
+									<Box
+										sx={{
+											color: 'rgba(255, 255, 255, 0.75)',
+											display: 'flex',
+											flexDirection: 'row',
+											alignItems: 'center',
+											m: 1,
+										}}
+									>
+										<Typography variant={'body1'}>{product.price}</Typography>
+										<IconButton
+											sx={{ color: 'rgba(255, 255, 255, 0.75)' }}
+											onClick={() =>
+												addToCart(
+													product.id,
+													product.photo,
+													product.title,
+													product.author,
+													product.price,
+													product.quantity
+												)
+											}
 										>
-											Price
-										</Typography>
-										<AddShoppingCartIcon />
-									</IconButton>
+											<AddShoppingCartIcon />
+										</IconButton>
+									</Box>
 								}
 							/>
 						</ImageListItem>

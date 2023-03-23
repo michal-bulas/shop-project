@@ -1,3 +1,5 @@
+import { useScrollPosition } from '@/hooks/useScrollPosition';
+import { useCart } from '@/store/CartProvider';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -8,14 +10,15 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import UserDropDown from './UserDropDown';
 import Badge from '@mui/material/Badge';
 import Link from 'next/link';
-import { useScrollPosition } from '@/hooks/useScrollPosition';
 
 interface MenuAppBarProps {
 	toggleMenu: () => void;
+	toggleCart: () => void;
 }
 
-const MenuAppBar: React.FC<MenuAppBarProps> = ({ toggleMenu }) => {
+const MenuAppBar: React.FC<MenuAppBarProps> = ({ toggleMenu, toggleCart }) => {
 	const scrollPosition = useScrollPosition();
+	const { cartQuantity } = useCart();
 
 	return (
 		<Box sx={{ flexGrow: 1 }}>
@@ -66,21 +69,24 @@ const MenuAppBar: React.FC<MenuAppBarProps> = ({ toggleMenu }) => {
 							</Typography>
 						</Link>
 					</Typography>
-					<>
-						<UserDropDown />
 
+					<UserDropDown />
+
+					{cartQuantity > 0 && (
 						<IconButton
 							size='large'
 							aria-label='cart of current user'
 							color='inherit'
+							onClick={toggleCart}
+							sx={{ ml: 1 }}
 						>
 							<Badge
-								badgeContent={3}
-								color='error'
+								badgeContent={cartQuantity}
+								color='secondary'
 							></Badge>
 							<ShoppingCartOutlinedIcon />
 						</IconButton>
-					</>
+					)}
 				</Toolbar>
 			</AppBar>
 		</Box>
