@@ -10,14 +10,14 @@ const ArrowButton: React.FC<DirectionTypes> = (props) => {
 		position: 'absolute',
 		top: '50%',
 		zIndex: 1,
-		[props.direction]: '-5px',
+		[props.direction]: '0px',
 		transform: `translate(0,-50%) ${
 			props.direction === 'left' ? 'rotate(180deg)' : ''
 		}`,
 		color: 'rgba(255, 255, 255, 0.65)',
 		cursor: 'pointer',
 		':active': {
-			color: 'rgba(201, 38, 38, 0.54)',
+			color: 'rgb(255, 255, 255)',
 		},
 	};
 	return (
@@ -25,7 +25,7 @@ const ArrowButton: React.FC<DirectionTypes> = (props) => {
 			onClick={props.onClick}
 			sx={ArrowStyles}
 		>
-			<ArrowForwardIosIcon sx={{ fontSize: 35 }} />{' '}
+			<ArrowForwardIosIcon sx={{ fontSize: 35 }} />
 		</IconButton>
 	);
 };

@@ -39,10 +39,7 @@ const ScrollTop: React.FC<Props> = ({ window }) => {
 				<Fab
 					size='medium'
 					aria-label='scroll back to top'
-					sx={{
-						bgcolor: 'black',
-						color: 'white',
-					}}
+					color='secondary'
 				>
 					<KeyboardArrowUpIcon />
 				</Fab>

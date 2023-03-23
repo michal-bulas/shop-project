@@ -4,7 +4,7 @@ const Footer = () => {
 	return (
 		<Toolbar
 			sx={{
-				background: '#3b3b3b',
+				bgcolor: 'primary.main',
 				width: '100%',
 				marginTop: 'auto',
 			}}

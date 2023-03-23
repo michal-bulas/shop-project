@@ -13,7 +13,8 @@ interface PropsTypes {
 	title: string;
 	year: string;
 	photo: string;
-	onClick: () => void;
+	onShowDetail: () => void;
+	onAddCart: () => void;
 }
 const ProductCard: React.FC<PropsTypes> = (props) => {
 	return (
@@ -30,7 +31,7 @@ const ProductCard: React.FC<PropsTypes> = (props) => {
 				}}
 			>
 				<CardActionArea
-					onClick={props.onClick}
+					onClick={props.onShowDetail}
 					sx={{
 						height: '90%',
 						display: 'flex',
@@ -43,7 +44,11 @@ const ProductCard: React.FC<PropsTypes> = (props) => {
 						image={props.photo}
 						alt='Book Image'
 						height='75%'
-						sx={{ objectFit: 'contain', boxShadow: 3 }}
+						sx={{
+							objectFit: 'contain',
+							boxShadow: 3,
+							backgroundColor: 'white',
+						}}
 					/>
 
 					<CardContent
@@ -52,12 +57,7 @@ const ProductCard: React.FC<PropsTypes> = (props) => {
 							width: '100%',
 						}}
 					>
-						<Typography
-							variant={'h6'}
-							onClick={props.onClick}
-						>
-							{props.title}
-						</Typography>
+						<Typography variant={'h6'}>{props.title}</Typography>
 
 						<Typography variant={'subtitle2'}>
 							{`${props.author}, ${props.year}`}
@@ -66,6 +66,7 @@ const ProductCard: React.FC<PropsTypes> = (props) => {
 				</CardActionArea>
 				<Divider />
 				<CardActionArea
+					onClick={props.onAddCart}
 					sx={{
 						width: '100%',
 						height: '10%',

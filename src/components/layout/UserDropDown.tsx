@@ -4,11 +4,11 @@ import Avatar from '@mui/material/Avatar';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { AuthContext } from '@/store/AuthProvider';
-import { useContext, useState } from 'react';
+import { useAuth } from '@/store/AuthProvider';
+import { useState } from 'react';
 
 const UserDropDown: React.FC = () => {
-	const authCtx = useContext(AuthContext);
+	const { logInWithGoogle, logOut, user } = useAuth();
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -22,17 +22,17 @@ const UserDropDown: React.FC = () => {
 
 	const logInHandler = (event: React.MouseEvent<HTMLElement>) => {
 		event.preventDefault();
-		authCtx.logInWithGoogle();
+		logInWithGoogle();
 	};
 
 	const logOutHandler = (event: React.MouseEvent<HTMLElement>) => {
 		event.preventDefault();
-		authCtx.logOut();
+		logOut();
 	};
 
 	return (
 		<>
-			{authCtx.user && (
+			{user && (
 				<Typography
 					variant='h6'
 					onClick={handleMenu}
@@ -43,7 +43,7 @@ const UserDropDown: React.FC = () => {
 						},
 					}}
 				>
-					{authCtx.user?.displayName}
+					{user?.displayName}
 				</Typography>
 			)}
 			<IconButton
@@ -54,10 +54,10 @@ const UserDropDown: React.FC = () => {
 				onClick={handleMenu}
 				color='inherit'
 			>
-				{authCtx.user ? (
+				{user ? (
 					<Avatar
 						alt='User Avatar'
-						src={authCtx.user.photoURL ?? undefined}
+						src={user.photoURL ?? undefined}
 						sx={{ width: 30, height: 30 }}
 					/>
 				) : (
@@ -79,7 +79,7 @@ const UserDropDown: React.FC = () => {
 				open={Boolean(anchorEl)}
 				onClose={handleClose}
 			>
-				{authCtx.user ? ( // replace div
+				{user ? ( // replace div
 					<div>
 						<MenuItem>Profile</MenuItem>
 						<MenuItem>My account</MenuItem>

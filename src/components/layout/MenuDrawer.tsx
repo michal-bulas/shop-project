@@ -1,5 +1,6 @@
+import React from 'react';
+import { useRouter } from 'next/router';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -12,7 +13,6 @@ import Typography from '@mui/material/Typography';
 import SendIcon from '@mui/icons-material/Send';
 import CallIcon from '@mui/icons-material/Call';
 import InfoIcon from '@mui/icons-material/Info';
-import { useRouter } from 'next/router';
 
 interface MenuDrawerProps {
 	open: boolean;
@@ -21,11 +21,11 @@ interface MenuDrawerProps {
 
 const drawerWidth = 240;
 
-const MenuDrawer: React.FC<MenuDrawerProps> = (props) => {
+const MenuDrawer: React.FC<MenuDrawerProps> = ({ open, toggleMenu }) => {
 	const router = useRouter();
 	const showCategoryHandler = (url: string) => {
 		router.push('/' + url.toLocaleLowerCase());
-		props.toggleMenu();
+		toggleMenu();
 	};
 
 	const drawer = (
@@ -41,9 +41,8 @@ const MenuDrawer: React.FC<MenuDrawerProps> = (props) => {
 			<Divider />
 			<List>
 				{['Science', 'Fantasy', 'Crime'].map((text) => (
-					<>
+					<React.Fragment key={text}>
 						<ListItem
-							key={text}
 							disablePadding
 							onClick={showCategoryHandler.bind(null, text)}
 						>
@@ -55,7 +54,7 @@ const MenuDrawer: React.FC<MenuDrawerProps> = (props) => {
 							</ListItemButton>
 						</ListItem>
 						<Divider variant='middle' />
-					</>
+					</React.Fragment>
 				))}
 			</List>
 
@@ -90,7 +89,6 @@ const MenuDrawer: React.FC<MenuDrawerProps> = (props) => {
 
 	return (
 		<Box sx={{ display: 'flex' }}>
-			<CssBaseline />
 			<Box
 				component='nav'
 				sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -99,8 +97,8 @@ const MenuDrawer: React.FC<MenuDrawerProps> = (props) => {
 				{/* The implementation can be swapped with js to avoid SEO duplication of links. */}
 				<Drawer
 					variant='temporary'
-					open={props.open}
-					onClose={props.toggleMenu}
+					open={open}
+					onClose={toggleMenu}
 					ModalProps={{
 						keepMounted: true, // Better open performance on mobile.
 					}}

@@ -3,8 +3,8 @@ import Head from 'next/head';
 // import { AuthContext } from '../store/AuthProvider';
 // import { useContext, useEffect } from 'react';
 // import { collection, query, where, getDocs } from 'firebase/firestore';
-// import { db } from '@/utilities/firebase';
 // import { doc, getDoc, getDocs, collection } from 'firebase/firestore';
+// import { db } from '@/utilities/firebase';
 
 export default function Home() {
 	// const authCtx = useContext(AuthContext);
