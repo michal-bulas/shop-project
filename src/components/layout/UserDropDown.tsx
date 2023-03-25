@@ -1,11 +1,12 @@
+import { useState } from 'react';
+import { useAuth } from '@/Contexts/AuthProvider';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Avatar from '@mui/material/Avatar';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { useAuth } from '@/store/AuthProvider';
-import { useState } from 'react';
+import Box from '@mui/material/Box';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 
 const UserDropDown: React.FC = () => {
 	const { logInWithGoogle, logOut, user } = useAuth();
@@ -32,27 +33,13 @@ const UserDropDown: React.FC = () => {
 
 	return (
 		<>
-			{user && (
-				<Typography
-					variant='h6'
-					onClick={handleMenu}
-					sx={{
-						'&:hover': {
-							cursor: 'pointer',
-							textDecoration: 'underline',
-						},
-					}}
-				>
-					{user?.displayName}
-				</Typography>
-			)}
 			<IconButton
 				size='large'
 				aria-label='account of current user'
 				aria-controls='menu-appbar'
 				aria-haspopup='true'
 				onClick={handleMenu}
-				color='inherit'
+				color='primary'
 			>
 				{user ? (
 					<Avatar
@@ -79,8 +66,8 @@ const UserDropDown: React.FC = () => {
 				open={Boolean(anchorEl)}
 				onClose={handleClose}
 			>
-				{user ? ( // replace div
-					<div>
+				{user ? (
+					<Box sx={{ minWidth: 200 }}>
 						<MenuItem>Profile</MenuItem>
 						<MenuItem>My account</MenuItem>
 						<MenuItem
@@ -91,9 +78,10 @@ const UserDropDown: React.FC = () => {
 						>
 							Log Out
 						</MenuItem>
-					</div>
+					</Box>
 				) : (
 					<MenuItem
+						sx={{ minWidth: 150 }}
 						onClick={(e) => {
 							logInHandler(e);
 							handleClose();

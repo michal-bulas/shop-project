@@ -1,4 +1,5 @@
 import React, { PropsWithChildren, useState } from 'react';
+import Head from 'next/head';
 import MenuAppBar from './MenuAppBar';
 import MenuDrawer from './MenuDrawer';
 import ScrollTop from './ScrollTop';
@@ -20,25 +21,45 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
 	};
 
 	return (
-		<Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-			<div id='back-to-top-anchor'>
-				<MenuAppBar
+		<>
+			<Head>
+				<title>Book Szop</title>
+				<meta
+					name='description'
+					content='Book Shop App Project'
+				/>
+				<meta
+					name='viewport'
+					content='width=device-width, initial-scale=1'
+				/>
+				<link
+					rel='icon'
+					href='/racoon.ico'
+				/>
+			</Head>
+
+			<Box
+				sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}
+			>
+				<div id='back-to-top-anchor'>
+					<MenuAppBar
+						toggleMenu={toggleMenuHandler}
+						toggleCart={toggleCartHandler}
+					/>
+				</div>
+				<MenuDrawer
+					open={isMenuOpen}
 					toggleMenu={toggleMenuHandler}
+				/>
+				<Cart
+					open={isCartOpen}
 					toggleCart={toggleCartHandler}
 				/>
-			</div>
-			<MenuDrawer
-				open={isMenuOpen}
-				toggleMenu={toggleMenuHandler}
-			/>
-			<Cart
-				open={isCartOpen}
-				toggleCart={toggleCartHandler}
-			/>
-			<Container>{children}</Container>
-			<Footer />
-			<ScrollTop />
-		</Box>
+				<Container>{children}</Container>
+				<Footer />
+				<ScrollTop />
+			</Box>
+		</>
 	);
 };
 

@@ -1,7 +1,7 @@
 import { useCallback, useState, useEffect } from 'react';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '@/utilities/firebase';
-import { useCart } from '@/store/CartProvider';
+import { useCart } from '@/Contexts/CartProvider';
 import { useRouter } from 'next/router';
 import ProductCard from '@/components/UI/ProductCard';
 import Grid from '@mui/material/Grid';

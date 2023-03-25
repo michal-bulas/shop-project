@@ -1,5 +1,6 @@
+import React from 'react';
 import { useScrollPosition } from '@/hooks/useScrollPosition';
-import { useCart } from '@/store/CartProvider';
+import { useCart } from '@/Contexts/CartProvider';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,6 +11,7 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import UserDropDown from './UserDropDown';
 import Badge from '@mui/material/Badge';
 import Link from 'next/link';
+import Logo from './Logo';
 
 interface MenuAppBarProps {
 	toggleMenu: () => void;
@@ -21,15 +23,16 @@ const MenuAppBar: React.FC<MenuAppBarProps> = ({ toggleMenu, toggleCart }) => {
 	const { cartQuantity } = useCart();
 
 	return (
-		<Box sx={{ flexGrow: 1 }}>
+		<Box>
 			<AppBar
 				position='fixed'
+				component='nav'
 				color='transparent'
 				sx={{ top: 0, backdropFilter: 'blur(20px)' }}
 			>
 				<Toolbar
 					sx={{
-						height: scrollPosition > 100 ? '65px' : '75px',
+						height: scrollPosition > 50 ? '65px' : '90px',
 						transition: 'all 0.2s linear',
 					}}
 				>
@@ -43,10 +46,14 @@ const MenuAppBar: React.FC<MenuAppBarProps> = ({ toggleMenu, toggleCart }) => {
 					>
 						<MenuIcon />
 					</IconButton>
-					<Typography
-						variant='h6'
-						component='div'
-						sx={{ flexGrow: 1 }}
+
+					<Box
+						sx={{
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+							flexGrow: 1,
+						}}
 					>
 						<Link
 							href='/'
@@ -56,19 +63,9 @@ const MenuAppBar: React.FC<MenuAppBarProps> = ({ toggleMenu, toggleCart }) => {
 								fontFamily: 'Roboto',
 							}}
 						>
-							<Typography
-								variant='h6'
-								component='h1'
-								sx={{
-									fontSize: scrollPosition > 100 ? '18px' : '20px',
-									transition: 'all 0.2s linear',
-									color: 'black',
-								}}
-							>
-								Shop App Project
-							</Typography>
-						</Link>
-					</Typography>
+							<Logo size={scrollPosition > 50 ? 7 : 10} />
+						</Link>{' '}
+					</Box>
 
 					<UserDropDown />
 
@@ -89,6 +86,7 @@ const MenuAppBar: React.FC<MenuAppBarProps> = ({ toggleMenu, toggleCart }) => {
 					)}
 				</Toolbar>
 			</AppBar>
+			<Toolbar />
 		</Box>
 	);
 };

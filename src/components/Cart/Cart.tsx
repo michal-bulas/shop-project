@@ -1,4 +1,4 @@
-import { useCart } from '@/store/CartProvider';
+import { useCart } from '@/Contexts/CartProvider';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import List from '@mui/material/List';
@@ -67,7 +67,7 @@ const Cart: React.FC<CartProps> = ({ open, toggleCart }) => {
 					<Button
 						size='small'
 						color='secondary'
-						variant='outlined'
+						variant='contained'
 						onClick={toggleCart}
 					>
 						Close
@@ -101,7 +101,7 @@ const Cart: React.FC<CartProps> = ({ open, toggleCart }) => {
 					</Box>
 					<Button
 						size='small'
-						variant='outlined'
+						variant='contained'
 						color='success'
 					>
 						Order

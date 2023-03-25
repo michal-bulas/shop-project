@@ -1,4 +1,4 @@
-import { useCart } from '@/store/CartProvider';
+import { useCart } from '@/Contexts/CartProvider';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Typography from '@mui/material/Typography';
