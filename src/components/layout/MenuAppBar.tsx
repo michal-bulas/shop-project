@@ -1,17 +1,16 @@
 import React from 'react';
+import Link from 'next/link';
+import Logo from './Logo';
 import { useScrollPosition } from '@/hooks/useScrollPosition';
 import { useCart } from '@/Contexts/CartProvider';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import UserDropDown from './UserDropDown';
 import Badge from '@mui/material/Badge';
-import Link from 'next/link';
-import Logo from './Logo';
 
 interface MenuAppBarProps {
 	toggleMenu: () => void;
@@ -27,63 +26,58 @@ const MenuAppBar: React.FC<MenuAppBarProps> = ({ toggleMenu, toggleCart }) => {
 			<AppBar
 				position='fixed'
 				component='nav'
-				color='transparent'
-				sx={{ top: 0, backdropFilter: 'blur(20px)' }}
+				color='primary'
 			>
 				<Toolbar
 					sx={{
 						height: scrollPosition > 50 ? '65px' : '90px',
 						transition: 'all 0.2s linear',
+						boxShadow: 10,
 					}}
 				>
 					<IconButton
 						size='large'
 						edge='start'
-						color='inherit'
+						color='info'
 						aria-label='menu'
-						sx={{ mr: 2 }}
 						onClick={toggleMenu}
+						sx={{ mr: 'auto' }}
 					>
 						<MenuIcon />
 					</IconButton>
-
 					<Box
 						sx={{
-							display: 'flex',
-							alignItems: 'center',
-							justifyContent: 'center',
-							flexGrow: 1,
+							left: '50%',
+							transform: 'translate(-50%, 0)',
+							position: 'absolute',
 						}}
 					>
-						<Link
-							href='/'
-							style={{
-								textDecoration: 'none',
-								color: 'white',
-								fontFamily: 'Roboto',
-							}}
-						>
+						<Link href='/'>
 							<Logo size={scrollPosition > 50 ? 7 : 10} />
-						</Link>{' '}
+						</Link>
 					</Box>
 
-					<UserDropDown />
+					<Box>
+						<UserDropDown />
 
-					{cartQuantity > 0 && (
 						<IconButton
 							size='large'
 							aria-label='cart of current user'
-							color='inherit'
+							color='info'
 							onClick={toggleCart}
-							sx={{ ml: 1 }}
 						>
 							<Badge
 								badgeContent={cartQuantity}
 								color='secondary'
-							></Badge>
-							<ShoppingCartOutlinedIcon />
+								anchorOrigin={{
+									vertical: 'top',
+									horizontal: 'left',
+								}}
+							>
+								<ShoppingCartOutlinedIcon />
+							</Badge>
 						</IconButton>
-					)}
+					</Box>
 				</Toolbar>
 			</AppBar>
 			<Toolbar />
