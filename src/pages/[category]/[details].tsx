@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { useCart } from '@/store/CartProvider';
+import { useCart } from '@/Contexts/CartProvider';
 import { db } from '@/utilities/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { useRouter } from 'next/router';
@@ -50,7 +50,7 @@ const ProductDetails: React.FC = () => {
 		<Grid
 			container
 			spacing={0}
-			sx={{ marginY: 15 }}
+			sx={{ marginY: 10 }}
 		>
 			<Grid
 				item
@@ -111,11 +111,14 @@ const ProductDetails: React.FC = () => {
 						flexDirection: 'row',
 						alignItems: 'center',
 						justifyContent: 'space-evenly',
+						textAlign: 'center',
 					}}
 				>
-					<Typography variant='body1'>Quantity: {product?.quantity}</Typography>
+					<Typography variant='body1'>
+						<b>In Stock:</b> <br /> {product?.quantity}
+					</Typography>
 					<Box>
-						<Typography sx={{ textAlign: 'center' }}>Users Rating:</Typography>
+						<Typography sx={{ fontWeight: 'bold' }}>Users Rating:</Typography>
 						<Rating
 							value={4.5}
 							precision={0.5}
@@ -123,7 +126,9 @@ const ProductDetails: React.FC = () => {
 						/>
 					</Box>
 
-					<Typography variant='body1'>${product?.price}</Typography>
+					<Typography variant='body1'>
+						<b>Price:</b> <br />${product?.price}
+					</Typography>
 				</Box>
 				<Box
 					sx={{
@@ -138,7 +143,15 @@ const ProductDetails: React.FC = () => {
 					<Button
 						variant='contained'
 						color='secondary'
-						sx={{ textTransform: 'none' }}
+						sx={{
+							textTransform: 'none',
+							border: '1px solid ',
+							borderColor: 'secondary.main',
+							':hover': {
+								bgcolor: 'white',
+								color: 'secondary.main',
+							},
+						}}
 						onClick={() =>
 							addToCart(
 								product.id,
@@ -154,9 +167,16 @@ const ProductDetails: React.FC = () => {
 						<AddShoppingCartIcon sx={{ marginLeft: 1 }} />
 					</Button>
 					<Button
-						sx={{ textTransform: 'none' }}
-						variant='outlined'
+						variant='contained'
 						color='primary'
+						sx={{
+							textTransform: 'none',
+							border: '1px solid ',
+							borderColor: 'primary.main',
+							bgcolor: 'white',
+							color: 'primary.main',
+							':hover': { bgcolor: 'primary.main', color: 'white' },
+						}}
 					>
 						Add To Wishlist
 					</Button>
@@ -178,43 +198,28 @@ const ProductDetails: React.FC = () => {
 				}}
 			>
 				<Typography variant='body1'>
-					<Box
-						component='span'
-						fontWeight='fontWeightMedium'
-					>
-						Author:{' '}
-					</Box>
+					<b>Author: </b>
 					{product?.author}
 				</Typography>
 				<Typography
 					variant='body1'
 					sx={{ mr: 0.5 }}
 				>
-					<Box
-						component='span'
-						fontWeight='fontWeightMedium'
-					>
-						Year of publication:{' '}
-					</Box>
+					<b>Year of publication: </b>
 					{product?.year}
 				</Typography>
 				<Typography
 					variant='body1'
 					sx={{ textTransform: 'capitalize' }}
 				>
-					<Box
-						component='span'
-						fontWeight='fontWeightMedium'
-					>
-						Category:{' '}
-					</Box>
+					<b>Category: </b>
 					{product?.category}
 				</Typography>
 			</Grid>
 			<Grid
 				item
 				xs={12}
-				sx={{ p: 3 }}
+				sx={{}}
 			>
 				<Divider />
 				<Carousel />

@@ -2,7 +2,8 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Image from 'next/image';
-import { useCart } from '@/store/CartProvider';
+import { useRouter } from 'next/router';
+import { useCart } from '@/Contexts/CartProvider';
 import { db } from '@/utilities/firebase';
 import { useState, useEffect, useCallback } from 'react';
 import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
@@ -26,6 +27,11 @@ interface ProductsTypes {
 
 const Carousel = () => {
 	const [products, setProducts] = useState<ProductsTypes[]>([]);
+	const router = useRouter();
+
+	const showDetailsHandler = (url: string) => {
+		router.push('/product/' + url);
+	};
 
 	const fetchDocuments = useCallback(async () => {
 		const q = query(collection(db, 'books'), orderBy('title'), limit(10));
@@ -45,13 +51,15 @@ const Carousel = () => {
 	const { addToCart } = useCart();
 
 	const settings = {
-		dots: true,
 		infinite: true,
 		autoplay: true,
+		variableWidth: true,
 		autoplaySpeed: 3000,
 		speed: 500,
+		rows: 1,
+		adaptiveHeight: true,
 		slidesToShow: 4,
-		slidesToScroll: 1,
+		slidesToScroll: 2,
 		initialSlide: 0,
 		nextArrow: <CarouselArrowButton direction='right' />,
 		prevArrow: <CarouselArrowButton direction='left' />,
@@ -87,25 +95,36 @@ const Carousel = () => {
 			>
 				Trending Now
 			</Typography>
-			<Box sx={{ boxShadow: 20 }}>
+			<Box sx={{ boxShadow: 20, mb: 5 }}>
 				<Slider {...settings}>
 					{products.map((product) => (
 						<ImageListItem
 							key={product.id}
-							sx={{ p: 1, boxShadow: 1, width: 200 }}
+							sx={{
+								p: 1,
+								boxShadow: 1,
+								width: 200,
+								textAlign: 'center',
+								':hover': { cursor: 'pointer' },
+							}}
 						>
 							<Image
 								src={product.photo}
 								alt={'Product Image'}
 								width={223}
 								height={334}
+								onClick={showDetailsHandler.bind(null, product.id)}
 								style={{
 									display: 'inline-block',
 									verticalAlign: 'bottom',
 								}}
 							/>
 							<ImageListItemBar
-								sx={{ m: 1.01 }}
+								sx={{
+									m: 1.01,
+									textAlign: 'left',
+									':hover': { cursor: 'default' },
+								}}
 								title={product.title}
 								subtitle={product.author}
 								actionIcon={

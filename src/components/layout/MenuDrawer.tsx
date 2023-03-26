@@ -11,7 +11,6 @@ import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import SendIcon from '@mui/icons-material/Send';
-import CallIcon from '@mui/icons-material/Call';
 import InfoIcon from '@mui/icons-material/Info';
 
 interface MenuDrawerProps {
@@ -38,7 +37,7 @@ const MenuDrawer: React.FC<MenuDrawerProps> = ({ open, toggleMenu }) => {
 					Books Categories
 				</Typography>
 			</Toolbar>
-			<Divider />
+			<Divider sx={{ bgcolor: 'secondary.main' }} />
 			<List>
 				{['Science', 'Fantasy', 'Crime'].map((text) => (
 					<React.Fragment key={text}>
@@ -48,7 +47,7 @@ const MenuDrawer: React.FC<MenuDrawerProps> = ({ open, toggleMenu }) => {
 						>
 							<ListItemButton>
 								<ListItemIcon>
-									<SendIcon />
+									<SendIcon sx={{ color: 'secondary.main' }} />
 								</ListItemIcon>
 								<ListItemText primary={text} />
 							</ListItemButton>
@@ -59,30 +58,19 @@ const MenuDrawer: React.FC<MenuDrawerProps> = ({ open, toggleMenu }) => {
 			</List>
 
 			<List sx={{ position: 'fixed', bottom: '0', width: '240px' }}>
-				<ListItem
-					disablePadding
-					key='AboutUs'
-				>
-					<ListItemButton>
-						<ListItemIcon>
-							<InfoIcon />
-						</ListItemIcon>
-						<ListItemText primary='About us' />
-					</ListItemButton>
-				</ListItem>
-				<Divider variant='middle' />
-
-				<ListItem
-					disablePadding
-					key='Contact'
-				>
-					<ListItemButton>
-						<ListItemIcon>
-							<CallIcon />
-						</ListItemIcon>
-						<ListItemText primary='Contact' />
-					</ListItemButton>
-				</ListItem>
+				{['About Us', 'FAQs', 'Career', 'Contact Us'].map((text) => (
+					<React.Fragment key={text}>
+						<Divider variant='middle' />
+						<ListItem disablePadding>
+							<ListItemButton>
+								<ListItemIcon>
+									<InfoIcon sx={{ color: 'secondary.main' }} />
+								</ListItemIcon>
+								<ListItemText primary={text} />
+							</ListItemButton>
+						</ListItem>
+					</React.Fragment>
+				))}
 			</List>
 		</>
 	);
