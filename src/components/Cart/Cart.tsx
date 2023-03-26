@@ -51,7 +51,7 @@ const Cart: React.FC<CartProps> = ({ open, toggleCart }) => {
 						variant='h6'
 						sx={{ textAlign: 'center', mt: '15%' }}
 					>
-						Cart Empty <br /> Add some books
+						Cart is Empty <br /> Add some Books
 					</Typography>
 				)}
 				<Box

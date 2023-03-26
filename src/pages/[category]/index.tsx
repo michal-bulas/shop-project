@@ -56,7 +56,7 @@ const CategoryDetail: React.FC = () => {
 			container
 			justifyContent={'center'}
 			spacing={4}
-			sx={{ marginY: 10 }}
+			sx={{ marginY: 7 }}
 		>
 			{isLoading &&
 				Array.from(Array(9).keys()).map((item) => (

@@ -26,7 +26,7 @@ interface ProductTypes {
 	author: string;
 }
 const ProductDetails: React.FC = () => {
-	const [product, setProduct] = useState<ProductTypes>();
+	const [product, setProduct] = useState<ProductTypes | null>(null);
 
 	const { addToCart } = useCart();
 
@@ -192,9 +192,11 @@ const ProductDetails: React.FC = () => {
 					justifyContent: 'space-evenly',
 					flexWrap: 'wrap',
 					p: 2,
-					mt: 3,
+					my: 5,
 					boxShadow: 5,
 					borderRadius: '16px',
+					color: 'white',
+					bgcolor: 'primary.main',
 				}}
 			>
 				<Typography variant='body1'>

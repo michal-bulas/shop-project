@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
-import Counter from '../UI/Counter';
+import Counter from './Counter';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';

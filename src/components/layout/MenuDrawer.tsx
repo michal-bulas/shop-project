@@ -105,5 +105,4 @@ const MenuDrawer: React.FC<MenuDrawerProps> = ({ open, toggleMenu }) => {
 		</Box>
 	);
 };
-
 export default MenuDrawer;

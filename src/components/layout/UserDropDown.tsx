@@ -39,7 +39,7 @@ const UserDropDown: React.FC = () => {
 				aria-controls='menu-appbar'
 				aria-haspopup='true'
 				onClick={handleMenu}
-				color='primary'
+				color='info'
 			>
 				{user ? (
 					<Avatar
@@ -48,7 +48,7 @@ const UserDropDown: React.FC = () => {
 						sx={{ width: 30, height: 30 }}
 					/>
 				) : (
-					<AccountCircle />
+					<AccountCircle color='info' />
 				)}
 			</IconButton>
 			<Menu
@@ -68,8 +68,6 @@ const UserDropDown: React.FC = () => {
 			>
 				{user ? (
 					<Box sx={{ minWidth: 200 }}>
-						<MenuItem>Profile</MenuItem>
-						<MenuItem>My account</MenuItem>
 						<MenuItem
 							onClick={(e) => {
 								logOutHandler(e);
@@ -81,7 +79,7 @@ const UserDropDown: React.FC = () => {
 					</Box>
 				) : (
 					<MenuItem
-						sx={{ minWidth: 150 }}
+						sx={{ minWidth: 200 }}
 						onClick={(e) => {
 							logInHandler(e);
 							handleClose();

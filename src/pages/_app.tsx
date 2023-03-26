@@ -11,13 +11,14 @@ import { CssBaseline, createTheme, ThemeProvider } from '@mui/material';
 declare module '@mui/material/styles' {
 	interface BreakpointOverrides {
 		ssm: true;
+		xm: true;
 	}
 }
 const theme = createTheme({
 	palette: {
 		mode: 'light',
 		primary: {
-			main: '#49494b',
+			main: '#585858',
 		},
 		secondary: {
 			main: '#ab003c',
@@ -32,6 +33,7 @@ const theme = createTheme({
 			ssm: 500,
 			sm: 600,
 			md: 900,
+			xm: 1050,
 			lg: 1200,
 			xl: 1536,
 		},
