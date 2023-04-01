@@ -1,8 +1,7 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React from 'react';
 import { useCart } from '@/Contexts/CartProvider';
 import { db } from '@/utilities/firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Carousel from '@/components/UI/Carousel';
 import Grid from '@mui/material/Grid';
@@ -12,39 +11,11 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Rating from '@mui/material/Rating';
+import { Product } from './types';
+import { NextPageContext } from 'next';
 
-interface ProductTypes {
-	category: string;
-	defaultCurrency: string;
-	description: string;
-	price: number;
-	quantity: number;
-	title: string;
-	year: string;
-	id: string;
-	photo: string;
-	author: string;
-}
-const ProductDetails: React.FC = () => {
-	const [product, setProduct] = useState<ProductTypes | null>(null);
-
+const ProductDetails: React.FC<{ product: Product }> = ({ product }) => {
 	const { addToCart } = useCart();
-
-	const router = useRouter();
-	const productId = router.query.details as string;
-
-	const getProduct = useCallback(async () => {
-		if (productId) {
-			const productDoc = doc(db, 'books', productId);
-			const productSnapshot = await getDoc(productDoc);
-			const productData = productSnapshot.data() as ProductTypes;
-			setProduct(productData);
-		}
-	}, [productId]);
-
-	useEffect(() => {
-		getProduct();
-	}, [getProduct, productId]);
 
 	return (
 		<Grid
@@ -153,14 +124,7 @@ const ProductDetails: React.FC = () => {
 							},
 						}}
 						onClick={() =>
-							addToCart(
-								product.id,
-								product.photo,
-								product.title,
-								product.author,
-								product.price,
-								product.quantity
-							)
+							addToCart(product)
 						}
 					>
 						Add To Cart
@@ -229,5 +193,18 @@ const ProductDetails: React.FC = () => {
 		</Grid>
 	);
 };
+
+export const getServerSideProps = async (context: NextPageContext) => {
+	const productId = context.query.details as string;
+	const productDoc = doc(db, 'books', productId);
+	const productSnapshot = await getDoc(productDoc);
+	const productData = productSnapshot.data() as Product;
+
+	return {
+		props: {
+			product: productData
+		}
+	}
+}
 
 export default ProductDetails;

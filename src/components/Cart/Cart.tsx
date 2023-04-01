@@ -11,24 +11,6 @@ interface CartProps {
 	toggleCart: () => void;
 }
 
-const cartStyle = {
-	position: 'absolute',
-	display: 'flex',
-	flexDirection: 'column',
-	top: '50%',
-	left: '50%',
-	transform: 'translate(-50%, -50%)',
-	width: { xs: '95%', sm: '85%', md: '70%', lg: '60%' },
-	minHeight: '50%',
-	maxHeight: '85%',
-	bgcolor: 'background.paper',
-	border: '2px solid #000',
-	overflow: 'auto',
-	boxShadow: 24,
-	px: 4,
-	pt: 2,
-};
-
 const Cart: React.FC<CartProps> = ({ open, toggleCart }) => {
 	const { cartItems } = useCart();
 	return (
@@ -36,7 +18,23 @@ const Cart: React.FC<CartProps> = ({ open, toggleCart }) => {
 			open={open}
 			onClose={toggleCart}
 		>
-			<Box sx={cartStyle}>
+			<Box sx={{
+				position: 'absolute',
+				display: 'flex',
+				flexDirection: 'column',
+				top: '50%',
+				left: '50%',
+				transform: 'translate(-50%, -50%)',
+				width: { xs: '95%', sm: '85%', md: '70%', lg: '60%' },
+				minHeight: '50%',
+				maxHeight: '85%',
+				bgcolor: 'background.paper',
+				border: '2px solid #000',
+				overflow: 'auto',
+				boxShadow: 24,
+				px: 4,
+				pt: 2,
+			}}>
 				{cartItems[0] ? (
 					<List>
 						{cartItems.map((item) => (

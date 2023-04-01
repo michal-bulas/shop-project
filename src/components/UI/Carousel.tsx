@@ -14,16 +14,8 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 import Typography from '@mui/material/Typography';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import CarouselArrowButton from '@/components/UI/CarouselArrowButton';
-
-interface ProductsTypes {
-	id: string;
-	title: string;
-	author: string;
-	price: number;
-	year: string;
-	photo: string;
-	quantity: number;
-}
+import { ProductsTypes } from './types';
+import { Product } from '@/pages/[category]/types';
 
 const Carousel = () => {
 	const [products, setProducts] = useState<ProductsTypes[]>([]);
@@ -141,14 +133,7 @@ const Carousel = () => {
 										<IconButton
 											sx={{ color: 'rgba(255, 255, 255, 0.75)' }}
 											onClick={() =>
-												addToCart(
-													product.id,
-													product.photo,
-													product.title,
-													product.author,
-													product.price,
-													product.quantity
-												)
+												addToCart(product as Product)
 											}
 										>
 											<AddShoppingCartIcon />

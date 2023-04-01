@@ -5,11 +5,11 @@ import Zoom from '@mui/material/Zoom';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 
-interface Props {
+interface ScrollTopProps {
 	window?: () => Window;
 }
 
-const ScrollTop: React.FC<Props> = ({ window }) => {
+const ScrollTop: React.FC<ScrollTopProps> = ({ window }) => {
 	const trigger = useScrollTrigger({
 		target: window ? window() : undefined,
 		disableHysteresis: true,
