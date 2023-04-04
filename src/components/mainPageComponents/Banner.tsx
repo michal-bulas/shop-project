@@ -32,7 +32,10 @@ const Banner: React.FC<{
 					flexDirection: 'column',
 					justifyContent: 'center',
 					bgcolor: '#313131',
-					borderRadius: reverse ? '0px 16px 16px 0px' : '16px 0px 0px 16px',
+					borderRadius: {
+						xs: reverse ? '0px 0px 16px 16px' : '16px 16px 0px 0px',
+						md: reverse ? '0px 16px 16px 0px' : '16px 0px 0px 16px',
+					},
 				}}
 			>
 				<Typography
@@ -52,7 +55,11 @@ const Banner: React.FC<{
 				sx={{
 					width: { xs: '100%', md: '50%' },
 					height: { xs: '50%', md: '100%' },
-					borderRadius: reverse ? '16px 0px 0px 16px' : '0px 16px 16px 0px',
+					overflow: 'hidden',
+					borderRadius: {
+						xs: reverse ? '16px 16px 0px 0px' : '0px 0px 16px 16px',
+						md: reverse ? '16px 0px 0px 16px' : '0px 16px 16px 0px',
+					},
 				}}
 			>
 				<Image
@@ -66,7 +73,7 @@ const Banner: React.FC<{
 						height: '100%',
 						display: 'inline-block',
 						verticalAlign: 'bottom',
-						borderRadius: reverse ? '16px 0px 0px 16px' : '0px 16px 16px 0px',
+						borderRadius: 'inherit',
 					}}
 				/>
 			</Box>
