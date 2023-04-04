@@ -13,4 +13,5 @@ Book Szop is an e-commerce website. This website features responsive and intuiti
 ○ React JS \
 ○ Next JS \
 ○ TypeScript \
-○ Material UI
+○ Material UI \
+○ Firebase 
