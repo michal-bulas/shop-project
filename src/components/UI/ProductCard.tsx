@@ -7,7 +7,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Divider from '@mui/material/Divider';
 
-interface PropsTypes {
+interface ProductCardProps {
 	author: string;
 	price: number;
 	title: string;
@@ -16,7 +16,7 @@ interface PropsTypes {
 	onShowDetail: () => void;
 	onAddCart: () => void;
 }
-const ProductCard: React.FC<PropsTypes> = (props) => {
+const ProductCard: React.FC<ProductCardProps> = (props) => {
 	return (
 		<>
 			<Card

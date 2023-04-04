@@ -1,7 +1,6 @@
 import Carousel from '@/components/UI/Carousel';
-import MainPageCategories from '@/components/MainPageComponents/Categories';
-import Banner from '@/components/MainPageComponents/Banner';
-import { Box } from '@mui/material';
+import MainPageCategories from '@/components/mainPageComponents/Categories';
+import Banner from '@/components/mainPageComponents/Banner';
 
 export default function Home() {
 	return (

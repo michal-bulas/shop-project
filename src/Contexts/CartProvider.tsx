@@ -1,32 +1,7 @@
-import useLocalStorage from '@/hooks/useLocalStorage';
 import React, { createContext, PropsWithChildren, useContext } from 'react';
-
-interface CartItem {
-	id: string;
-	photo: string;
-	title: string;
-	author: string;
-	price: number;
-	quantity: number;
-	cartItemQuantity: number;
-}
-
-interface CartContext {
-	getItemQuantity: (id: string) => number;
-	addToCart: (
-		id: string,
-		photo: string,
-		title: string,
-		author: string,
-		price: number,
-		quantity: number
-	) => void;
-	increaseCartQuantity: (id: string) => void;
-	decreaseCartQuantity: (id: string) => void;
-	removeFromCart: (id: string) => void;
-	cartQuantity: number;
-	cartItems: CartItem[];
-}
+import useLocalStorage from '@/hooks/useLocalStorage';
+import { Product } from '@/types/ProductTypes';
+import type { CartItem, CartContext } from '../types/CartTypes';
 
 const CartContext = createContext({} as CartContext);
 
@@ -49,14 +24,14 @@ const CartProvider: React.FC<PropsWithChildren> = ({ children }) => {
 		return cartItems.find((item) => item.id === id)?.cartItemQuantity || 0;
 	};
 
-	const addToCart = (
-		id: string,
-		photo: string,
-		title: string,
-		author: string,
-		price: number,
-		quantity: number
-	) => {
+	const addToCart = ({
+		id,
+		photo,
+		title,
+		author,
+		price,
+		quantity,
+	}: Product) => {
 		if (cartItems.find((item) => item.id === id)) {
 			increaseCartQuantity(id);
 		} else {
@@ -70,7 +45,11 @@ const CartProvider: React.FC<PropsWithChildren> = ({ children }) => {
 	const increaseCartQuantity = (id: string) => {
 		setCartItems((currItems) =>
 			currItems.map((item) => {
-				if (item.id === id && item.cartItemQuantity < item.quantity) {
+				if (
+					item.id === id &&
+					item.cartItemQuantity &&
+					item.cartItemQuantity < item.quantity
+				) {
 					return { ...item, cartItemQuantity: item.cartItemQuantity + 1 };
 				} else {
 					return item;

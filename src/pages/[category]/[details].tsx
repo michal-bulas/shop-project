@@ -1,8 +1,9 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import { useCart } from '@/Contexts/CartProvider';
+import React from 'react';
+import { Product } from '@/types/ProductTypes';
+import { useCart } from '@/contexts/CartProvider';
 import { db } from '@/utilities/firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import { useRouter } from 'next/router';
+import { NextPageContext } from 'next';
 import Image from 'next/image';
 import Carousel from '@/components/UI/Carousel';
 import Grid from '@mui/material/Grid';
@@ -12,39 +13,27 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Rating from '@mui/material/Rating';
+import { CircularProgress } from '@mui/material';
 
-interface ProductTypes {
-	category: string;
-	defaultCurrency: string;
-	description: string;
-	price: number;
-	quantity: number;
-	title: string;
-	year: string;
-	id: string;
-	photo: string;
-	author: string;
-}
-const ProductDetails: React.FC = () => {
-	const [product, setProduct] = useState<ProductTypes | null>(null);
-
+const ProductDetails: React.FC<{ product: Product }> = ({ product }) => {
 	const { addToCart } = useCart();
 
-	const router = useRouter();
-	const productId = router.query.details as string;
-
-	const getProduct = useCallback(async () => {
-		if (productId) {
-			const productDoc = doc(db, 'books', productId);
-			const productSnapshot = await getDoc(productDoc);
-			const productData = productSnapshot.data() as ProductTypes;
-			setProduct(productData);
-		}
-	}, [productId]);
-
-	useEffect(() => {
-		getProduct();
-	}, [getProduct, productId]);
+	if (!product) {
+		return (
+			<CircularProgress
+				color='secondary'
+				sx={{
+					position: 'absolute',
+					m: 'auto',
+					left: 0,
+					right: 0,
+					top: -50,
+					bottom: 50,
+					textAlign: 'center',
+				}}
+			/>
+		);
+	}
 
 	return (
 		<Grid
@@ -55,22 +44,32 @@ const ProductDetails: React.FC = () => {
 			<Grid
 				item
 				xs={12}
-				sm={6}
-				md={6}
+				smd={6}
 				sx={{
-					p: 2,
 					display: 'flex',
 					justifyContent: 'center',
 					alignItems: 'center',
+					mb: 5,
 				}}
 			>
-				<Box sx={{ boxShadow: 10, borderRadius: '16px' }}>
+				<Box
+					sx={{
+						boxShadow: 10,
+						borderRadius: '16px',
+					}}
+				>
 					<Image
-						src={product?.photo ?? ''}
+						src={product.photo}
 						alt='Product Image'
-						width={267}
+						width={400}
 						height={400}
-						style={{ display: 'block', borderRadius: '16px' }}
+						style={{
+							display: 'inline-block',
+							verticalAlign: 'bottom',
+							borderRadius: '16px',
+							width: '100%',
+							height: '100%',
+						}}
 					/>
 				</Box>
 			</Grid>
@@ -78,10 +77,11 @@ const ProductDetails: React.FC = () => {
 			<Grid
 				item
 				xs={12}
-				sm={6}
-				md={6}
+				smd={6}
 				sx={{
 					p: 2,
+					mb: 5,
+
 					display: 'flex',
 					justifyContent: 'center',
 					alignItems: 'center',
@@ -94,13 +94,13 @@ const ProductDetails: React.FC = () => {
 					variant='h4'
 					sx={{ textAlign: 'center', textJustify: 'inter-word' }}
 				>
-					{product?.title}
+					{product.title}
 				</Typography>
 				<Typography
 					variant='body1'
 					sx={{ textAlign: 'justify', textJustify: 'inter-word', p: 3 }}
 				>
-					{product?.description}
+					{product.description}
 				</Typography>
 
 				<Box
@@ -115,7 +115,7 @@ const ProductDetails: React.FC = () => {
 					}}
 				>
 					<Typography variant='body1'>
-						<b>In Stock:</b> <br /> {product?.quantity}
+						<b>In Stock:</b> <br /> {product.quantity}
 					</Typography>
 					<Box>
 						<Typography sx={{ fontWeight: 'bold' }}>Users Rating:</Typography>
@@ -127,7 +127,7 @@ const ProductDetails: React.FC = () => {
 					</Box>
 
 					<Typography variant='body1'>
-						<b>Price:</b> <br />${product?.price}
+						<b>Price:</b> <br />${product.price}
 					</Typography>
 				</Box>
 				<Box
@@ -152,16 +152,7 @@ const ProductDetails: React.FC = () => {
 								color: 'secondary.main',
 							},
 						}}
-						onClick={() =>
-							addToCart(
-								product.id,
-								product.photo,
-								product.title,
-								product.author,
-								product.price,
-								product.quantity
-							)
-						}
+						onClick={() => addToCart(product)}
 					>
 						Add To Cart
 						<AddShoppingCartIcon sx={{ marginLeft: 1 }} />
@@ -192,7 +183,7 @@ const ProductDetails: React.FC = () => {
 					justifyContent: 'space-evenly',
 					flexWrap: 'wrap',
 					p: 2,
-					my: 5,
+					mb: 5,
 					boxShadow: 5,
 					borderRadius: '16px',
 					color: 'white',
@@ -201,21 +192,21 @@ const ProductDetails: React.FC = () => {
 			>
 				<Typography variant='body1'>
 					<b>Author: </b>
-					{product?.author}
+					{product.author}
 				</Typography>
 				<Typography
 					variant='body1'
 					sx={{ mr: 0.5 }}
 				>
 					<b>Year of publication: </b>
-					{product?.year}
+					{product.year}
 				</Typography>
 				<Typography
 					variant='body1'
 					sx={{ textTransform: 'capitalize' }}
 				>
 					<b>Category: </b>
-					{product?.category}
+					{product.category}
 				</Typography>
 			</Grid>
 			<Grid
@@ -228,6 +219,19 @@ const ProductDetails: React.FC = () => {
 			</Grid>
 		</Grid>
 	);
+};
+
+export const getServerSideProps = async (context: NextPageContext) => {
+	const productId = context.query.details as string;
+	const productDoc = doc(db, 'books', productId);
+	const productSnapshot = await getDoc(productDoc);
+	const productData = productSnapshot.data() as Product;
+
+	return {
+		props: {
+			product: productData,
+		},
+	};
 };
 
 export default ProductDetails;

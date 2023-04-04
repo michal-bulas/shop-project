@@ -1,4 +1,4 @@
-import { useCart } from '@/Contexts/CartProvider';
+import { useCart } from '@/contexts/CartProvider';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import ListItem from '@mui/material/ListItem';
@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
 
-interface CartItemTypes {
+interface CartItemProps {
 	id: string;
 	photo: string;
 	title: string;
@@ -24,7 +24,7 @@ const CartItem = ({
 	author,
 	price,
 	cartItemQuantity,
-}: CartItemTypes) => {
+}: CartItemProps) => {
 	const { removeFromCart } = useCart();
 	const router = useRouter();
 

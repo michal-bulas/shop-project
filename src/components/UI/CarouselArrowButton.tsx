@@ -1,11 +1,11 @@
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-interface DirectionTypes {
+interface DirectionProps {
 	direction: 'left' | 'right';
 	onClick?: () => void;
 }
-const ArrowButton: React.FC<DirectionTypes> = (props) => {
+const ArrowButton: React.FC<DirectionProps> = (props) => {
 	const ArrowStyles = {
 		position: 'absolute',
 		top: '50%',
