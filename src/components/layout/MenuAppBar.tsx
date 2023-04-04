@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Logo from './Logo';
 import { useScrollPosition } from '@/hooks/useScrollPosition';
-import { useCart } from '@/Contexts/CartProvider';
+import { useCart } from '@/contexts/CartProvider';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';

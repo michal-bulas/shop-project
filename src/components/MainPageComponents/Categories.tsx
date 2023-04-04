@@ -1,4 +1,4 @@
-import ImageCard from '@/components/MainPageComponents/ImageCard';
+import ImageCard from '@/components/mainPageComponents/ImageCard';
 import Box from '@mui/material/Box';
 
 const MainPageCategories = () => {

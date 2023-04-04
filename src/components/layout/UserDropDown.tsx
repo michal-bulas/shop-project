@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { useAuth } from '@/Contexts/AuthProvider';
+import { useAuth } from '@/contexts/AuthProvider';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 

@@ -23,7 +23,7 @@
 		"next-env.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
-		"src/Contexts/firebase/auth-context.js"
+		"src/contexts/firebase/auth-context.js"
 	],
 	"exclude": ["node_modules"]
 }

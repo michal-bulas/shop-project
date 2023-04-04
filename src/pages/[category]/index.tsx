@@ -1,51 +1,15 @@
-import { useCallback, useState, useEffect } from 'react';
+import type { Product } from '@/types/ProductTypes';
+import { NextPageContext } from 'next';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '@/utilities/firebase';
-import { useCart } from '@/Contexts/CartProvider';
+import { useCart } from '@/contexts/CartProvider';
 import { useRouter } from 'next/router';
 import ProductCard from '@/components/UI/ProductCard';
 import Grid from '@mui/material/Grid';
-import Skeleton from '@mui/material/Skeleton';
 
-interface ProductsTypes {
-	id: string;
-	title: string;
-	author: string;
-	price: number;
-	year: string;
-	photo: string;
-	quantity: number;
-}
-
-const CategoryDetail: React.FC = () => {
-	const [isLoading, setIsLoading] = useState<boolean>(true);
-	const [products, setProducts] = useState<ProductsTypes[]>([]);
+const CategoryDetail: React.FC<{ products: Product[] }> = ({ products }) => {
 	const { addToCart } = useCart();
 	const router = useRouter();
-	const productsCategory = router.query.category as string;
-
-	const getProducts = useCallback(async () => {
-		setIsLoading(true);
-		if (productsCategory) {
-			const q = query(
-				collection(db, 'books'),
-				where('category', '==', productsCategory)
-			);
-
-			const productsSnapshot = await getDocs(q);
-
-			const newProducts = productsSnapshot.docs.map(
-				(doc) => doc.data() as ProductsTypes
-			);
-
-			setProducts(newProducts);
-			setIsLoading(false);
-		}
-	}, [productsCategory]);
-
-	useEffect(() => {
-		getProducts();
-	}, [getProducts]);
 
 	const showDetailsHandler = (url: string) => {
 		router.push('/product/' + url);
@@ -58,33 +22,6 @@ const CategoryDetail: React.FC = () => {
 			spacing={4}
 			sx={{ marginY: 7 }}
 		>
-			{isLoading &&
-				Array.from(Array(9).keys()).map((item) => (
-					<Grid
-						item
-						xs={12}
-						sm={6}
-						md={4}
-						key={item}
-						justifyContent='center'
-					>
-						<Skeleton
-							variant='rectangular'
-							height={480}
-						/>
-						<Skeleton
-							variant='text'
-							height={30}
-							width='80%'
-						/>
-						<Skeleton
-							variant='text'
-							height={20}
-							width='60%'
-						/>
-					</Grid>
-				))}
-
 			{products.map((product) => (
 				<Grid
 					item
@@ -101,20 +38,31 @@ const CategoryDetail: React.FC = () => {
 						price={product.price}
 						onShowDetail={showDetailsHandler.bind(null, product.id)}
 						onAddCart={() => {
-							addToCart(
-								product.id,
-								product.photo,
-								product.title,
-								product.author,
-								product.price,
-								product.quantity
-							);
+							addToCart(product);
 						}}
 					></ProductCard>
 				</Grid>
 			))}
 		</Grid>
 	);
+};
+
+export const getServerSideProps = async (context: NextPageContext) => {
+	const productsCategory = context.query.category;
+	const q = query(
+		collection(db, 'books'),
+		where('category', '==', productsCategory)
+	);
+
+	const productsSnapshot = await getDocs(q);
+
+	const newProducts = productsSnapshot.docs.map((doc) => doc.data() as Product);
+
+	return {
+		props: {
+			products: newProducts,
+		},
+	};
 };
 
 export default CategoryDetail;

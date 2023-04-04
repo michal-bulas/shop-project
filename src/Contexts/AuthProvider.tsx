@@ -1,22 +1,11 @@
 import React, { PropsWithChildren, createContext, useContext } from 'react';
+import type { AuthContextValue } from '../types/AuthTypes';
 import { auth, provider, db } from '../utilities/firebase';
-import { signInWithPopup, signOut, User } from 'firebase/auth';
+import { signInWithPopup, signOut } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { doc, setDoc } from 'firebase/firestore';
 
-interface AuthContextValue {
-	user: User | null | undefined;
-	loading: boolean;
-	logInWithGoogle: () => void;
-	logOut: () => void;
-}
-
-const AuthContext = createContext({
-	user: null,
-	loading: false,
-	logInWithGoogle: () => {},
-	logOut: () => {},
-} as AuthContextValue);
+const AuthContext = createContext({} as AuthContextValue);
 
 export const useAuth = () => {
 	return useContext(AuthContext);

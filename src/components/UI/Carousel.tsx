@@ -1,9 +1,11 @@
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { Product } from '@/types/ProductTypes';
+import { ProductsTypes } from '@/types/CarouselTypes';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useCart } from '@/Contexts/CartProvider';
+import { useCart } from '@/contexts/CartProvider';
 import { db } from '@/utilities/firebase';
 import { useState, useEffect, useCallback } from 'react';
 import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
@@ -14,16 +16,6 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 import Typography from '@mui/material/Typography';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import CarouselArrowButton from '@/components/UI/CarouselArrowButton';
-
-interface ProductsTypes {
-	id: string;
-	title: string;
-	author: string;
-	price: number;
-	year: string;
-	photo: string;
-	quantity: number;
-}
 
 const Carousel = () => {
 	const [products, setProducts] = useState<ProductsTypes[]>([]);
@@ -140,16 +132,7 @@ const Carousel = () => {
 										<Typography variant={'body1'}>{product.price}</Typography>
 										<IconButton
 											sx={{ color: 'rgba(255, 255, 255, 0.75)' }}
-											onClick={() =>
-												addToCart(
-													product.id,
-													product.photo,
-													product.title,
-													product.author,
-													product.price,
-													product.quantity
-												)
-											}
+											onClick={() => addToCart(product as Product)}
 										>
 											<AddShoppingCartIcon />
 										</IconButton>

@@ -1,14 +1,14 @@
-import { useCart } from '@/Contexts/CartProvider';
+import { useCart } from '@/contexts/CartProvider';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Typography from '@mui/material/Typography';
 
-interface CounterTypes {
+interface CounterProps {
 	cartItemQuantity: number;
 	itemId: string;
 }
 
-const Counter = ({ cartItemQuantity, itemId }: CounterTypes) => {
+const Counter = ({ cartItemQuantity, itemId }: CounterProps) => {
 	const { increaseCartQuantity, decreaseCartQuantity } = useCart();
 
 	return (

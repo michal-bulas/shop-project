@@ -1,12 +1,12 @@
 import React, { PropsWithChildren, useState } from 'react';
 import Head from 'next/head';
+import Cart from '../cart/Cart';
 import MenuAppBar from './MenuAppBar';
 import MenuDrawer from './MenuDrawer';
 import ScrollTop from './ScrollTop';
 import Footer from './Footer';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import Cart from '../Cart/Cart';
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -34,7 +34,8 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
 				/>
 				<link
 					rel='icon'
-					href='/racoon.ico'
+					href='/icon.ico'
+					type='image/x-icon'
 				/>
 			</Head>
 
